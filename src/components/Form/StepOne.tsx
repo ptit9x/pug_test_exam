@@ -12,7 +12,7 @@ import {
   salesTypeList,
   productTypeList,
 } from "../../constants";
-import { FormStepOne } from "./Form";
+import { FormStepOne } from "../../types";
 import { useMemo } from "react";
 
 interface StepOnePros {

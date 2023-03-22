@@ -1,31 +1,23 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import { grey } from "@mui/material/colors";
+import dayjs from "dayjs";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
 import Steps from "./Steps";
 import Countdown from "./Countdown";
 import StepOne from "./StepOne";
 import StepTwo from "./StepTwo";
-
-export interface FormStepOne {
-  branchCode: string;
-  branch: string;
-  brand: string;
-  salesType: string;
-  productType: string;
-}
-
-export interface FormStepTwo {
-  clockIn: string;
-}
+import StepThree from "./StepThree";
+import StepFour from "./StepFour";
+import {
+  FormStepFour,
+  FormStepOne,
+  FormStepThree,
+  FormStepTwo,
+} from "../../types";
+import { submit } from "../../services/request";
 
 export default function Form() {
   const [activeStep, setActiveStep] = useState(0);
@@ -36,11 +28,53 @@ export default function Form() {
     salesType: "",
     productType: "",
   });
-  const [stepTwo, setStepTwo] = useState<FormStepTwo>({
-    clockIn: "",
+  const [toast, setToast] = useState({
+    open: false,
+    message: "",
   });
 
-  const handleClickNext = () => {
+  const stepTwo: FormStepTwo = {
+    clockIn: dayjs().format("YYYY-MM-DD hh:mm:ss"),
+  };
+
+  const [stepThree, setStepThree] = useState<FormStepThree>({
+    workingOn: "",
+  });
+
+  const stepFour: FormStepFour = useMemo(() => {
+    return {
+      clockOut: dayjs(stepTwo.clockIn)
+        .add(8, "hours")
+        .format("YYYY-MM-DD HH:mm:ss"), // assuming working 8 hours a day
+    };
+  }, [stepTwo.clockIn]);
+
+  const handleClickNext = async () => {
+    if (activeStep === 3) {
+      const formData = new FormData();
+      const request = {
+        ...stepOne,
+        ...stepTwo,
+        ...stepThree,
+        ...stepFour,
+      };
+
+      Object.entries(request).forEach(([key, value]: [string, string]) => {
+        formData.append(key, value);
+      });
+
+      submit
+        .then((value) => console.log(value))
+        .catch((error) => {
+          console.log("request", request);
+          setToast({
+            open: true,
+            message: error,
+          });
+          console.log(error);
+        });
+      return;
+    }
     setActiveStep((prevState) => prevState + 1);
   };
   const handleChange = (value: string, name: string, step: number) => {
@@ -51,8 +85,8 @@ export default function Form() {
           [name]: value,
         }));
         return;
-      case 1:
-        setStepTwo((prevState) => ({
+      case 2:
+        setStepThree((prevState) => ({
           ...prevState,
           [name]: value,
         }));
@@ -60,6 +94,9 @@ export default function Form() {
       default:
         return;
     }
+  };
+  const handleCloseToast = () => {
+    setToast((prevState) => ({ ...prevState, open: false }));
   };
 
   const renderStep = () => {
@@ -80,6 +117,23 @@ export default function Form() {
             onClickNext={handleClickNext}
           />
         );
+      case 2:
+        return (
+          <StepThree
+            prevData={{ ...stepOne, ...stepTwo }}
+            data={stepThree}
+            onClickNext={handleClickNext}
+            onChange={(value, name) => handleChange(value, name, 2)}
+          />
+        );
+      case 3:
+        return (
+          <StepFour
+            data={stepFour}
+            prevData={{ ...stepOne, ...stepTwo, ...stepThree, ...stepFour }}
+            onClickNext={handleClickNext}
+          />
+        );
       default:
         return;
     }
@@ -87,11 +141,23 @@ export default function Form() {
 
   return (
     <Card sx={{ borderRadius: 3, padding: 2, minHeight: "500px" }}>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+        open={toast.open}
+        onClose={handleCloseToast}
+        autoHideDuration={3000}
+      >
+        <Alert severity="error">{toast.message}</Alert>
+      </Snackbar>
+
       <Steps activeStep={activeStep} />
 
       <Divider sx={{ marginTop: 3, marginBottom: 1.5 }} />
 
-      {/* <Countdown /> */}
+      <Countdown />
 
       {renderStep()}
     </Card>

@@ -3,15 +3,26 @@ import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
-import { FormStepOne, FormStepTwo } from "../../types";
+import {
+  FormStepOne,
+  FormStepTwo,
+  FormStepThree,
+  FormStepFour,
+} from "../../types";
+
+type PrevData = FormStepOne & FormStepTwo & FormStepThree;
 
 interface StepTwoProps {
-  prevData: FormStepOne;
-  data: FormStepTwo;
+  prevData: PrevData;
+  data: FormStepFour;
   onClickNext: () => void;
 }
 
-export default function StepTwo({ prevData, data, onClickNext }: StepTwoProps) {
+export default function StepFour({
+  prevData,
+  data,
+  onClickNext,
+}: StepTwoProps) {
   return (
     <>
       <Grid container spacing={2}>
@@ -26,12 +37,14 @@ export default function StepTwo({ prevData, data, onClickNext }: StepTwoProps) {
           <Typography variant="body1">
             Product type: {prevData.productType}
           </Typography>
+          <Typography variant="body1">Clock In: {prevData.clockIn}</Typography>
+          <Typography variant="body1">
+            Clock In: {prevData.workingOn}
+          </Typography>
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
-          <Typography variant="body1">You've clocked in at:</Typography>
-          <Typography variant="body1" sx={{ fontWeight: 700 }}>
-            {data.clockIn}
-          </Typography>
+          <Typography variant="body1">You've clocked out at:</Typography>
+          <Typography variant="body1">{data.clockOut}</Typography>
         </Grid>
       </Grid>
 
@@ -42,7 +55,7 @@ export default function StepTwo({ prevData, data, onClickNext }: StepTwoProps) {
           color="error"
           onClick={onClickNext}
         >
-          Next
+          Submit
         </Button>
       </Stack>
     </>

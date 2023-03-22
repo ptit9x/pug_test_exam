@@ -5,7 +5,7 @@ import Chip from "@mui/material/Chip";
 import { grey } from "@mui/material/colors";
 
 export default function Countdown() {
-  const [minutes, setMinutes] = useState(100);
+  const [minutes, setMinutes] = useState(5);
   const [seconds, setSeconds] = useState(0);
 
   useEffect(() => {

@@ -17,7 +17,7 @@ export default function Header() {
         backgroundColor: red[600],
         borderRadius: 3,
         padding: 2,
-        marginBottom: 1,
+        marginBottom: 2,
       }}
     >
       <Grid container alignItems="center" justifyContent="space-between">

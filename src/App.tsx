@@ -1,14 +1,15 @@
 import { ThemeProvider } from "@mui/material";
 
-import { Header } from "./components";
+import { Header, Form } from "./components";
 import theme from "./theme";
 
 function App() {
+  const age = 1;
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
         <Header />
-        <h1>app</h1>
+        <Form />
       </div>
     </ThemeProvider>
   );

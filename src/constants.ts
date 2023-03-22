@@ -1,3 +1,34 @@
+export const cityList = [
+  {
+    title: "City 1",
+    value: "city1"
+  },
+  {
+    title: "City 2",
+    value: "city2"
+  },
+  {
+    title: "City 3",
+    value: "city3"
+  }
+]
+
+export const suburbList = [
+  {
+    title: "Suburb 1",
+    value: "suburb1"
+  },
+  {
+    title: "Suburb 2",
+    value: "suburb2"
+  },
+  {
+    title: "Suburb 3",
+    value: "suburb3"
+  }
+]
+
+
 export const branchCodeList = [
   {
     title: "Branch Code 1",

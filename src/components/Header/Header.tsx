@@ -1,20 +1,34 @@
+import { useEffect, useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Grid from "@mui/material/Grid";
 import Breadcrumbs from "@mui/material/Breadcrumbs";
 import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import Divider from "@mui/material/Divider";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { red } from "@mui/material/colors";
+import MenuIcon from "@mui/icons-material/Menu";
+
+import CollapsedMenu from "./CollapsedMenu";
 
 export default function Header() {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = isCollapsed ? "hidden" : "visible";
+  }, [isCollapsed]);
+
+  const handleClickCollapse = () => {
+    setIsCollapsed((prevState) => !prevState);
+  };
+
   return (
     <AppBar
       position="static"
       sx={{
         boxShadow: "none",
-        backgroundColor: red[600],
+        backgroundColor: "#CB4248",
         borderRadius: 3,
         padding: 2,
         marginBottom: 2,
@@ -34,12 +48,34 @@ export default function Header() {
             <Typography sx={{ color: "#ffffff" }}>Attendance</Typography>
           </Breadcrumbs>
 
-          <Typography sx={{ color: "#ffffff" }} fontWeight={700}>
+          <Typography
+            sx={{
+              color: "#ffffff",
+              display: { xs: "none", sm: "none", md: "block" },
+            }}
+            fontWeight={700}
+          >
             Attendance
           </Typography>
         </Grid>
         <Grid item>
-          <Stack direction="row" spacing={4}>
+          <IconButton
+            sx={{
+              color: "#fff",
+              display: { xs: "block", sm: "block", md: "none" },
+            }}
+            onClick={handleClickCollapse}
+          >
+            <MenuIcon fontSize="small" />
+          </IconButton>
+
+          {isCollapsed && <CollapsedMenu />}
+
+          <Stack
+            direction="row"
+            spacing={4}
+            sx={{ display: { xs: "none", sm: "none", md: "flex" } }}
+          >
             <Button
               variant="text"
               sx={{ color: "#ffffff", textTransform: "none", padding: 0 }}

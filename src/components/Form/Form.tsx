@@ -18,10 +18,16 @@ import {
   FormStepTwo,
 } from "../../types";
 import { submit } from "../../services/request";
+import StepTitle from "./StepTitle";
 
 export default function Form() {
   const [activeStep, setActiveStep] = useState(0);
   const [stepOne, setStepOne] = useState<FormStepOne>({
+    address: "",
+    city: "",
+    suburb: "",
+  });
+  const [stepTwo, setStepTwo] = useState<FormStepTwo>({
     branchCode: "",
     branch: "store name",
     brand: "",
@@ -33,21 +39,15 @@ export default function Form() {
     message: "",
   });
 
-  const stepTwo: FormStepTwo = {
-    clockIn: dayjs().format("YYYY-MM-DD hh:mm:ss"),
-  };
-
   const [stepThree, setStepThree] = useState<FormStepThree>({
     workingOn: "",
   });
 
   const stepFour: FormStepFour = useMemo(() => {
     return {
-      clockOut: dayjs(stepTwo.clockIn)
-        .add(8, "hours")
-        .format("YYYY-MM-DD HH:mm:ss"), // assuming working 8 hours a day
+      clockOut: dayjs().add(8, "hours").format("YYYY-MM-DD HH:mm"), // assuming working 8 hours a day
     };
-  }, [stepTwo.clockIn]);
+  }, []);
 
   const handleClickNext = async () => {
     if (activeStep === 3) {
@@ -71,7 +71,6 @@ export default function Form() {
             open: true,
             message: error,
           });
-          console.log(error);
         });
       return;
     }
@@ -80,11 +79,16 @@ export default function Form() {
   const handleChange = (value: string, name: string, step: number) => {
     switch (step) {
       case 0:
-        setStepOne((prevState) => ({
+        setStepOne((prevState: any) => ({
           ...prevState,
           [name]: value,
         }));
         return;
+      case 1:
+        setStepTwo((prevState) => ({
+          ...prevState,
+          [name]: value,
+        }));
       case 2:
         setStepThree((prevState) => ({
           ...prevState,
@@ -112,9 +116,9 @@ export default function Form() {
       case 1:
         return (
           <StepTwo
-            prevData={stepOne}
             data={stepTwo}
             onClickNext={handleClickNext}
+            onChange={(value, name) => handleChange(value, name, 1)}
           />
         );
       case 2:
@@ -140,7 +144,7 @@ export default function Form() {
   };
 
   return (
-    <Card sx={{ borderRadius: 3, padding: 2, minHeight: "500px" }}>
+    <Card sx={{ borderRadius: 3, padding: 2, minHeight: "32rem" }}>
       <Snackbar
         anchorOrigin={{
           vertical: "top",
@@ -158,6 +162,8 @@ export default function Form() {
       <Divider sx={{ marginTop: 3, marginBottom: 1.5 }} />
 
       <Countdown />
+
+      <StepTitle step={activeStep} />
 
       {renderStep()}
     </Card>

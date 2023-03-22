@@ -1,3 +1,4 @@
+import { ChangeEvent, useMemo } from "react";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import InputLabel from "@mui/material/InputLabel";
@@ -11,9 +12,10 @@ import {
   branchList,
   salesTypeList,
   productTypeList,
+  cityList,
+  suburbList,
 } from "../../constants";
 import { FormStepOne } from "../../types";
-import { useMemo } from "react";
 
 interface StepOnePros {
   data: FormStepOne;
@@ -23,16 +25,16 @@ interface StepOnePros {
 
 export default function StepOne({ data, onChange, onClickNext }: StepOnePros) {
   const isShowNextButton = useMemo(() => {
-    return (
-      data.branchCode !== "" &&
-      data.salesType !== "" &&
-      data.productType !== "" &&
-      data.brand !== ""
-    );
+    return data.address !== "" && data.city !== "" && data.suburb !== "";
   }, [data]);
 
   const handleChangeSelect = (event: SelectChangeEvent) => {
     const { name, value } = event.target;
+    onChange(value, name);
+  };
+  const handleChangeAddress = (event: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = event.target;
+    console.log({ name, value });
     onChange(value, name);
   };
 
@@ -40,23 +42,22 @@ export default function StepOne({ data, onChange, onClickNext }: StepOnePros) {
     <>
       <Grid container spacing={2}>
         <Grid item lg={6} md={6} sm={12} xs={12}>
-          <InputLabel htmlFor="branchCode" required>
-            Branch code
+          <InputLabel htmlFor="city" required>
+            City
           </InputLabel>
           <Select
             displayEmpty
             defaultValue=""
             fullWidth
             size="small"
-            placeholder="Branch code"
-            name="branchCode"
-            id="branchCode"
+            name="city"
+            id="city"
             onChange={handleChangeSelect}
           >
             <MenuItem hidden disabled value="">
-              Branch code
+              Select ...
             </MenuItem>
-            {branchCodeList.map((item) => (
+            {cityList.map((item) => (
               <MenuItem key={item.value} value={item.value}>
                 {item.title}
               </MenuItem>
@@ -64,86 +65,39 @@ export default function StepOne({ data, onChange, onClickNext }: StepOnePros) {
           </Select>
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
-          <InputLabel htmlFor="branch">Branch</InputLabel>
+          <InputLabel htmlFor="suburb" required>
+            Suburb
+          </InputLabel>
+          <Select
+            displayEmpty
+            defaultValue=""
+            fullWidth
+            size="small"
+            name="suburb"
+            id="suburb"
+            onChange={handleChangeSelect}
+          >
+            <MenuItem hidden disabled value="">
+              Select ...
+            </MenuItem>
+            {suburbList.map((item) => (
+              <MenuItem key={item.value} value={item.value}>
+                {item.title}
+              </MenuItem>
+            ))}
+          </Select>
+        </Grid>
+        <Grid item lg={12} sm={12} xs={12}>
+          <InputLabel htmlFor="address" required>
+            Address
+          </InputLabel>
           <TextField
-            disabled
-            id="branch"
-            name="branch"
             fullWidth
+            id="address"
             size="small"
-            placeholder="Store name"
-            value={data.branch}
+            name="address"
+            onChange={handleChangeAddress}
           />
-        </Grid>
-        <Grid item lg={12} sm={12} xs={12}>
-          <InputLabel htmlFor="brand" required>
-            Brand
-          </InputLabel>
-          <Select
-            displayEmpty
-            defaultValue=""
-            fullWidth
-            size="small"
-            placeholder="Brand"
-            id="brand"
-            name="brand"
-            onChange={handleChangeSelect}
-          >
-            <MenuItem hidden disabled value="">
-              Select...
-            </MenuItem>
-            {branchList.map((item) => (
-              <MenuItem key={item.value} value={item.value}>
-                {item.title}
-              </MenuItem>
-            ))}
-          </Select>
-        </Grid>
-        <Grid item lg={12} sm={12} xs={12}>
-          <InputLabel htmlFor="salesType" required>
-            Sales Type
-          </InputLabel>
-          <Select
-            displayEmpty
-            defaultValue=""
-            fullWidth
-            size="small"
-            id="salesType"
-            name="salesType"
-            onChange={handleChangeSelect}
-          >
-            <MenuItem hidden disabled value="">
-              Select...
-            </MenuItem>
-            {salesTypeList.map((item) => (
-              <MenuItem key={item.value} value={item.value}>
-                {item.title}
-              </MenuItem>
-            ))}
-          </Select>
-        </Grid>
-        <Grid item lg={12} sm={12} xs={12}>
-          <InputLabel htmlFor="productType" required>
-            Product Type
-          </InputLabel>
-          <Select
-            displayEmpty
-            defaultValue=""
-            fullWidth
-            size="small"
-            name="productType"
-            id="productType"
-            onChange={handleChangeSelect}
-          >
-            <MenuItem hidden disabled value="">
-              Select...
-            </MenuItem>
-            {productTypeList.map((item) => (
-              <MenuItem key={item.value} value={item.value}>
-                {item.title}
-              </MenuItem>
-            ))}
-          </Select>
         </Grid>
       </Grid>
 

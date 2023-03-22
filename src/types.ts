@@ -1,13 +1,15 @@
 export interface FormStepOne {
+  address: string;
+  city: string;
+  suburb: string;
+}
+
+export interface FormStepTwo {
   branchCode: string;
   branch: string;
   brand: string;
   salesType: string;
   productType: string;
-}
-
-export interface FormStepTwo {
-  clockIn: string;
 }
 
 export interface FormStepThree {

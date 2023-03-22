@@ -34,44 +34,36 @@ export default function Countdown() {
   };
 
   return (
-    <>
-      <Card sx={{ borderRadius: 0 }}>
-        <Typography
-          sx={{
-            textTransform: "capitalize",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontWeight: 400,
-            fontSize: "0.875rem",
-            paddingTop: 1,
-            paddingBottom: 1,
-            color: grey[700],
-          }}
-          variant="body1"
-        >
-          After
-          <Chip
-            label={`${addLeadingZeros(minutes)}:${addLeadingZeros(seconds)}`}
-            color="error"
-            size="small"
-            sx={{ marginLeft: 0.5, marginRight: 0.5, borderRadius: 1 }}
-          />
-          this page will be refreshed
-        </Typography>
-      </Card>
+    <Card sx={{ borderRadius: 0 }}>
       <Typography
-        color="error"
         sx={{
-          textAlign: "center",
-          fontWeight: 700,
-          fontSize: "1.25rem",
-          marginBottom: 2,
-          marginTop: 0.5,
+          textTransform: "capitalize",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontWeight: 400,
+          fontSize: "0.875rem",
+          paddingTop: 1,
+          paddingBottom: 1,
+          color: grey[700],
         }}
+        variant="body1"
       >
-        Enter clock in information
+        After
+        <Chip
+          component="span"
+          label={`${addLeadingZeros(minutes)}:${addLeadingZeros(seconds)}`}
+          size="small"
+          sx={{
+            marginLeft: 0.5,
+            marginRight: 0.5,
+            borderRadius: 1,
+            backgroundColor: "#FF0000",
+            color: "#ffffff",
+          }}
+        />
+        this page will be refreshed
       </Typography>
-    </>
+    </Card>
   );
 }

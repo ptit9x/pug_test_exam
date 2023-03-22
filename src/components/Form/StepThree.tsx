@@ -32,6 +32,9 @@ export default function StepThree({
     <>
       <Grid container spacing={2}>
         <Grid item lg={6} md={6} sm={12} xs={12}>
+          <Typography variant="body1">City: {prevData.city}</Typography>
+          <Typography variant="body1">Suburb: {prevData.suburb}</Typography>
+          <Typography variant="body1">Address: {prevData.address}</Typography>
           <Typography variant="body1">
             Branch code: {prevData.branchCode}
           </Typography>
@@ -42,7 +45,6 @@ export default function StepThree({
           <Typography variant="body1">
             Product type: {prevData.productType}
           </Typography>
-          <Typography variant="body1">Clock In: {prevData.clockIn}</Typography>
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={12}>
           <InputLabel htmlFor="workingOn" required>

@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import Stepper from "@mui/material/Stepper";
 import Step from "@mui/material/Step";
+import StepConnector from "@mui/material/StepConnector";
 import StepLabel from "@mui/material/StepLabel";
 import Button from "@mui/material/Button";
 import Badge from "@mui/material/Badge";
@@ -11,9 +12,9 @@ import { grey, red } from "@mui/material/colors";
 
 const steps = ["Share Location", "Clock in", "Working On", "Clock out"];
 const stepColors: { [key: string]: string } = {
-  completed: red[800],
-  active: red[500],
-  default: grey[400],
+  completed: "#a00409",
+  active: "#ed1c24",
+  default: "#e0e0e0",
 };
 
 interface StepIconProps {
@@ -36,8 +37,8 @@ function StepIcon({ completed, active }: StepIconProps) {
     <Box
       sx={{
         borderRadius: "50%",
-        width: "16px",
-        height: "16px",
+        width: "1rem",
+        height: "1rem",
         backgroundColor: stepColors[renderStep()],
       }}
     />
@@ -54,16 +55,25 @@ export default function Steps({ activeStep }: StepsProps) {
       >
         <Badge
           badgeContent={3}
-          color="error"
-          sx={{ "& .MuiBadge-badge": { top: "-5px" } }}
+          sx={{
+            "& .MuiBadge-badge": {
+              top: "-0.3125rem",
+              backgroundColor: "#FF4D4E",
+              color: "#ffffff",
+            },
+          }}
         >
-          <ErrorOutlineIcon color="error" />
+          <ErrorOutlineIcon sx={{ color: "#FF4D4E" }} />
         </Badge>
 
         <Button
           disableElevation
           variant="contained"
-          sx={{ minWidth: "fit-content", padding: 0.5 }}
+          sx={{
+            minWidth: "fit-content",
+            padding: 0.5,
+            backgroundColor: "#1576ff",
+          }}
         >
           <SettingsIcon fontSize="small" />
         </Button>
@@ -72,7 +82,25 @@ export default function Steps({ activeStep }: StepsProps) {
       <Box
         sx={{ width: { lg: "80%", sm: "100%", xs: "100%" }, margin: "0 auto" }}
       >
-        <Stepper activeStep={activeStep} alternativeLabel>
+        <Stepper
+          activeStep={activeStep}
+          alternativeLabel
+          connector={
+            <StepConnector
+              sx={{
+                top: "0.5rem",
+                "&.Mui-active .MuiStepConnector-line": {
+                  borderColor: "#ed1c24",
+                  borderTopWidth: "0.125rem",
+                },
+                "&.Mui-completed .MuiStepConnector-line": {
+                  borderColor: "#ed1c24",
+                  borderTopWidth: "0.125rem",
+                },
+              }}
+            />
+          }
+        >
           {steps.map((label) => {
             const stepProps: { completed?: boolean } = {};
 
@@ -82,8 +110,8 @@ export default function Steps({ activeStep }: StepsProps) {
                   StepIconComponent={StepIcon}
                   sx={{
                     "& .MuiStepLabel-label": {
-                      fontSize: "10px",
-                      marginTop: "8px",
+                      fontSize: "0.625rem",
+                      marginTop: "0.5rem",
                       color: grey[700],
                       fontWeight: 500,
                     },
@@ -91,7 +119,7 @@ export default function Steps({ activeStep }: StepsProps) {
                       color: grey[700],
                     },
                     "& .MuiStepLabel-label.MuiStepLabel-alternativeLabel": {
-                      marginTop: "8px !important",
+                      marginTop: "0.5rem !important",
                     },
                   }}
                 >

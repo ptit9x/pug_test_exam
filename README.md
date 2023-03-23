@@ -29,4 +29,5 @@ Go to http://localhost:5173
 ```bash
 $ docker compose up
 ```
+
 Go to ${ip_address} (if you run in the local, go to http://localhost)

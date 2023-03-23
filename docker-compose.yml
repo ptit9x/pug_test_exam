@@ -1,0 +1,12 @@
+version: '3'
+services:
+  frontend:
+    container_name: 'supara_frontend'
+    hostname: 'supara_frontend'
+    image: 'huynhdn/supara_frontend:1.0'
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:80

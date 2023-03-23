@@ -5,8 +5,7 @@ import Chip from "@mui/material/Chip";
 import { grey } from "@mui/material/colors";
 
 export default function Countdown() {
-  const [minutes, setMinutes] = useState(5);
-  const [seconds, setSeconds] = useState(0);
+  const [seconds, setSeconds] = useState(300);
 
   useEffect(() => {
     let myInterval = setInterval(() => {
@@ -14,13 +13,8 @@ export default function Countdown() {
         setSeconds(seconds - 1);
       }
       if (seconds === 0) {
-        if (minutes === 0) {
-          clearInterval(myInterval);
-          window.location.reload();
-        } else {
-          setMinutes(minutes - 1);
-          setSeconds(59);
-        }
+        clearInterval(myInterval);
+        window.location.reload();
       }
     }, 1000);
     return () => {
@@ -52,7 +46,9 @@ export default function Countdown() {
         After
         <Chip
           component="span"
-          label={`${addLeadingZeros(minutes)}:${addLeadingZeros(seconds)}`}
+          label={`${addLeadingZeros(
+            Math.floor(seconds / 60)
+          )}:${addLeadingZeros(seconds % 60)}`}
           size="small"
           sx={{
             marginLeft: 0.5,

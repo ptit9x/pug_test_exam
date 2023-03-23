@@ -1,7 +1,3 @@
 // mock request
 
-export const submit = new Promise((resolve, reject) => {
-  setTimeout(() => {
-    reject("Sorry, there is something wrong")
-  }, 500)
-})
+export const submit = Promise.reject('Sorry, there is something wrong');

@@ -1,4 +1,4 @@
-# PRJ Analytics
+# Pug Testing
 
 This project was bootstrapped with [Vite](https://vitejs.dev/guide/).
 
@@ -9,14 +9,24 @@ React
 Material UI (MUI) v5
 DayJS
 
-## Available Scripts
+## Installation
 
-## `yarn install`
+```bash
+$ yarn
+```
 
-Before you can run the project, run `yarn install` to install the dependencies
+## Running the app
 
-### `yarn dev`
+```bash
+# development
+$ yarn dev
+```
 
-Runs the app in the development mode.\
+Go to http://localhost:5173
 
-The page will reload if you make edits.\
+## Running the app production
+
+```bash
+$ docker compose up
+```
+Go to ${ip_address} (if you run in the local, go to http://localhost)

@@ -4,7 +4,6 @@ import { Header, Form } from "./components";
 import theme from "./theme";
 
 function App() {
-  const age = 1;
   return (
     <ThemeProvider theme={theme}>
       <div className="App">

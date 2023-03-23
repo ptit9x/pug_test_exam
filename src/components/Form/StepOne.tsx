@@ -7,14 +7,7 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
-import {
-  branchCodeList,
-  branchList,
-  salesTypeList,
-  productTypeList,
-  cityList,
-  suburbList,
-} from "../../constants";
+import { cityList, suburbList } from "../../constants";
 import { FormStepOne } from "../../types";
 
 interface StepOnePros {
@@ -34,7 +27,6 @@ export default function StepOne({ data, onChange, onClickNext }: StepOnePros) {
   };
   const handleChangeAddress = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    console.log({ name, value });
     onChange(value, name);
   };
 

@@ -22,10 +22,15 @@ export default function Countdown() {
     };
   }, [seconds]);
 
-  const addLeadingZeros = (number: number) => {
-    if (number < 10) return `0${number}`;
-    return number;
-  };
+  const formatDate = (n: number) => {
+    const minute = Math.floor(n / 60);
+    const second = n % 60;
+    const formatNumber = (number: number) => {
+      return ("0" + number).slice(-2);
+    }
+
+    return `${formatNumber(minute)}:${formatNumber(second)}`;
+  }
 
   return (
     <Card sx={{ borderRadius: 0 }}>
@@ -46,9 +51,7 @@ export default function Countdown() {
         After
         <Chip
           component="span"
-          label={`${addLeadingZeros(
-            Math.floor(seconds / 60)
-          )}:${addLeadingZeros(seconds % 60)}`}
+          label={formatDate(seconds)}
           size="small"
           sx={{
             marginLeft: 0.5,

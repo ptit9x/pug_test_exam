@@ -109,7 +109,7 @@ export default function Form() {
         return (
           <StepOne
             data={stepOne}
-            onChange={(value, name) => handleChange(value, name, 0)}
+            onChange={(value, name) => handleChange(value, name, activeStep)}
             onClickNext={handleClickNext}
           />
         );
@@ -118,7 +118,7 @@ export default function Form() {
           <StepTwo
             data={stepTwo}
             onClickNext={handleClickNext}
-            onChange={(value, name) => handleChange(value, name, 1)}
+            onChange={(value, name) => handleChange(value, name, activeStep)}
           />
         );
       case 2:
@@ -127,7 +127,7 @@ export default function Form() {
             prevData={{ ...stepOne, ...stepTwo }}
             data={stepThree}
             onClickNext={handleClickNext}
-            onChange={(value, name) => handleChange(value, name, 2)}
+            onChange={(value, name) => handleChange(value, name, activeStep)}
           />
         );
       case 3:
